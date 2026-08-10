@@ -4,15 +4,39 @@ How we define the set of securities a dividend-capture trade could actually be
 executed on, and how we attach the attributes the cross-sectional analysis
 needs.
 
-**If you just want the data: use `ticker/tickers_all_5y_metadata.jsonl`.** It is
-one JSON object per line, one line per (ticker, listing status), carrying both
-the bulk reference fields and the company detail. Everything else in this
-document explains how it was built and what its limits are.
+## Where the data lives
 
-That file is gitignored — it is multi-MB vendor data, and the working agreement
+| | Path |
+|---|---|
+| **HDFS — attributes (use this)** | `$TEAM/reference/tickers_all_5y_metadata.jsonl` — 11.1 MB, 20,729 rows |
+| **HDFS — membership** | `$TEAM/curated/ticker_sip_list` — 13,192 tickers |
+| Local (after a pull) | `ticker/tickers_all_5y_metadata.jsonl` |
+| **Committed sample** | `ticker/sample_tickers_metadata.jsonl` — 15 records, in git |
+
+The metadata file is one JSON object per line, one line per (ticker, listing
+status), carrying both the bulk reference fields and the company detail. The SIP
+list is one ticker per line, no header, no other columns.
+
+The full files are gitignored — multi-MB vendor data, and the working agreement
 keeps data in HDFS rather than git. To see the record shape without running the
-pullers or holding credentials, read the committed sample:
-**`ticker/sample_tickers_metadata.jsonl`** (15 records, section 7).
+pullers or holding credentials, read the committed sample (section 7).
+
+Reading them in Spark — point at the **directory** for the SIP list, never a
+`part-*` file, since part filenames carry a per-run UUID that changes every run:
+
+```python
+meta = spark.read.json(f"{TEAM}/reference/tickers_all_5y_metadata.jsonl")
+sip  = spark.read.csv(f"{TEAM}/curated/ticker_sip_list")
+```
+
+Use a **left** join with an explicit unknown bucket, not an inner join — many
+older delisted records have no `type` at all, and an inner join drops them
+silently. And note that **ticker alone is not a unique key**: 60 symbols appear
+twice, once delisted and once active. See section 5.
+
+Alongside these, from the dividend stage:
+`$TEAM/reference/dividends_5y.jsonl` (165,888 rows) — see
+`dividends/README_DIVIDEND.md`.
 
 ---
 
@@ -76,8 +100,10 @@ different universes. Excluding the misses is also methodologically correct: a
 capture trade requires buying before the close and selling at the ex-date open,
 which is undefined on an instrument with no intraday price.
 
-Consequence: the proposal's ~750K event estimate is ~10x too high. The real
-tradeable event count is closer to 50–70K over five years. The big-data
+Consequence: the proposal's ~750K event estimate is ~4.5x too high. The
+measured count is **165,888 events over five years** — see
+`dividends/README_DIVIDEND.md`. (An earlier revision of this document guessed
+50–70K; that was ~2.5x too low.) The big-data
 constraint lives on the price side, not the event table.
 
 ---
@@ -397,26 +423,24 @@ python3 util/make_sample.py                               # refresh committed sa
 python3 gen_ticker_metadata.py tickers_all_5y.jsonl 100
 ```
 
-Push the result to HDFS for the Spark jobs:
+Push the result to HDFS for the Spark jobs. Upload via the browser SSH gear icon
+→ Upload File (11 MB goes through fine uncompressed), then:
 
 ```bash
 hdfs dfs -mkdir -p $TEAM/reference
 hdfs dfs -put tickers_all_5y_metadata.jsonl $TEAM/reference/
+hdfs dfs -ls -h $TEAM/reference
+hdfs dfs -text $TEAM/reference/tickers_all_5y_metadata.jsonl | wc -l
 ```
+
+The count must read 20729 — that's the check that the browser transfer didn't
+truncate. `-put` fails rather than overwrites if the file exists; use `-put -f`
+to replace.
 
 ### Reading it in Spark
 
-Always point at the **directory**, never a `part-*` file — part filenames carry
-a per-run UUID and change every time.
-
-```python
-meta = spark.read.json(f"{TEAM}/reference/tickers_all_5y_metadata.jsonl")
-sip  = spark.read.csv(f"{TEAM}/curated/ticker_sip_list")
-```
-
-Use a **left** join with an explicit unknown bucket, not an inner join — many
-older delisted records have no `type` at all, and an inner join drops them
-silently.
+See "Where the data lives" at the top — paths, the directory-not-part-file rule,
+and the left-join caveat.
 
 ### Gotcha: shuffle partitions
 
