@@ -1,0 +1,164 @@
+
+sic_code map: 376 descriptions
+CS+ADRC labelled: 4148   unlabelled: 1291
+deduped on description: 4148 -> 4083 (65 inherited duplicates removed)
+             4-digit: 373 classes |  16 with >=40 rows | 1837/4083 rows kept | largest 10.4%
+ 2-digit major group:  64 classes |  22 with >=40 rows | 3435/4083 rows kept | largest 16.7%
+            division:   8 classes |   8 with >=40 rows | 4083/4083 rows kept | largest 41.9%
+
+=== training on: hybrid ===
+2-digit groups kept as-is: 22; the rest fall back to their division
+still under 40 rows after fallback, merged to OTHER: ['Finance, Insurance & Real Estate (other)', 'Wholesale Trade (other)']
+training rows: 4083, classes: 29
++-----------------------------------------+-----+-----+
+|label_str                                |count|pct  |
++-----------------------------------------+-----+-----+
+|SIC 28                                   |683  |16.73|
+|SIC 73                                   |460  |11.27|
+|SIC 60                                   |298  |7.3  |
+|SIC 67                                   |280  |6.86 |
+|SIC 38                                   |251  |6.15 |
+|SIC 36                                   |213  |5.22 |
+|Manufacturing (other)                    |190  |4.65 |
+|SIC 35                                   |153  |3.75 |
+|SIC 49                                   |117  |2.87 |
+|SIC 61                                   |110  |2.69 |
+|Services (other)                         |110  |2.69 |
+|SIC 37                                   |101  |2.47 |
+|SIC 13                                   |96   |2.35 |
+|SIC 63                                   |96   |2.35 |
+|Retail Trade (other)                     |92   |2.25 |
+|Transportation & Public Utilities (other)|84   |2.06 |
+|SIC 62                                   |76   |1.86 |
+|SIC 80                                   |73   |1.79 |
+|SIC 20                                   |72   |1.76 |
+|SIC 48                                   |64   |1.57 |
+|Mining (other)                           |60   |1.47 |
+|OTHER                                    |60   |1.47 |
+|SIC 65                                   |54   |1.32 |
+|Construction (other)                     |52   |1.27 |
+|SIC 59                                   |51   |1.25 |
+|SIC 87                                   |49   |1.2  |
+|SIC 50                                   |48   |1.18 |
+|SIC 34                                   |46   |1.13 |
+|SIC 58                                   |44   |1.08 |
++-----------------------------------------+-----+-----+
+
+MAJORITY BASELINE: 16.7%  <- the number to beat
+
+train 3262 / test 821
+
+=== RESULT ===
+accuracy      0.683
+weighted F1   0.670
+baseline      0.167
+lift over baseline: +0.516
+
+=== per-class on the test set ===
++-----------------------------------------+---+---+------+
+|label_str                                |n  |hit|recall|
++-----------------------------------------+---+---+------+
+|SIC 28                                   |137|122|0.891 |
+|SIC 73                                   |82 |70 |0.854 |
+|SIC 60                                   |68 |68 |1.0   |
+|SIC 38                                   |57 |35 |0.614 |
+|SIC 36                                   |57 |37 |0.649 |
+|SIC 67                                   |47 |39 |0.83  |
+|SIC 35                                   |39 |14 |0.359 |
+|Manufacturing (other)                    |28 |19 |0.679 |
+|Services (other)                         |28 |13 |0.464 |
+|SIC 61                                   |27 |12 |0.444 |
+|Transportation & Public Utilities (other)|23 |13 |0.565 |
+|SIC 49                                   |22 |15 |0.682 |
+|SIC 37                                   |22 |12 |0.545 |
+|SIC 20                                   |19 |12 |0.632 |
+|SIC 63                                   |18 |15 |0.833 |
+|Retail Trade (other)                     |15 |9  |0.6   |
+|SIC 13                                   |14 |11 |0.786 |
+|Mining (other)                           |13 |9  |0.692 |
+|SIC 50                                   |13 |0  |0.0   |
+|SIC 80                                   |13 |4  |0.308 |
+|Construction (other)                     |13 |9  |0.692 |
+|OTHER                                    |12 |3  |0.25  |
+|SIC 62                                   |12 |10 |0.833 |
+|SIC 48                                   |11 |5  |0.455 |
+|SIC 59                                   |9  |0  |0.0   |
+|SIC 58                                   |8  |4  |0.5   |
+|SIC 65                                   |6  |1  |0.167 |
+|SIC 87                                   |4  |0  |0.0   |
+|SIC 34                                   |4  |0  |0.0   |
++-----------------------------------------+---+---+------+
+
+=== most common confusions ===
++--------------------+---------------------+-----+
+|label_str           |pred_str             |count|
++--------------------+---------------------+-----+
+|SIC 38              |SIC 28               |10   |
+|SIC 35              |SIC 36               |8    |
+|SIC 61              |SIC 73               |7    |
+|SIC 36              |SIC 73               |7    |
+|SIC 50              |SIC 73               |6    |
+|SIC 48              |SIC 73               |5    |
+|Services (other)    |SIC 73               |5    |
+|SIC 80              |SIC 38               |5    |
+|SIC 20              |SIC 28               |5    |
+|SIC 36              |SIC 38               |4    |
+|SIC 37              |SIC 35               |4    |
+|Retail Trade (other)|Manufacturing (other)|4    |
+|SIC 28              |SIC 38               |4    |
+|SIC 38              |SIC 73               |4    |
+|SIC 36              |SIC 37               |3    |
++--------------------+---------------------+-----+
+only showing top 15 rows
+
+
+=== pseudo-sector assigned to 1291 unlabelled CS+ADRC ===
++-----------------------------------------+-----+
+|pred_str                                 |count|
++-----------------------------------------+-----+
+|SIC 73                                   |331  |
+|SIC 28                                   |193  |
+|SIC 67                                   |104  |
+|Mining (other)                           |74   |
+|SIC 36                                   |73   |
+|Manufacturing (other)                    |69   |
+|Transportation & Public Utilities (other)|60   |
+|SIC 60                                   |54   |
+|SIC 38                                   |35   |
+|SIC 49                                   |31   |
+|SIC 62                                   |26   |
+|Services (other)                         |25   |
+|SIC 65                                   |23   |
+|SIC 35                                   |22   |
+|SIC 13                                   |21   |
+|SIC 37                                   |21   |
+|SIC 61                                   |20   |
+|SIC 87                                   |19   |
+|SIC 48                                   |17   |
+|Retail Trade (other)                     |14   |
++-----------------------------------------+-----+
+only showing top 20 rows
+
++------+--------+---------------------+------------------------------------------------------------------------------------------+
+|ticker|sec_type|pred_str             |desc                                                                                      |
++------+--------+---------------------+------------------------------------------------------------------------------------------+
+|AACG  |ADRC    |SIC 28               |ATA Creativity Global is an international educational services company focused on providin|
+|AADX  |CS      |SIC 37               |Applied Aerospace & Defense Inc specializes in providing engineering and vertically integr|
+|AAPG  |ADRC    |SIC 28               |Ascentage Pharma Group International is a clinical-stage biotechnology company engaged in |
+|AAUC  |CS      |SIC 28               |Allied Gold Corp is a company focused on gold mining activities in Africa. Allied has thre|
+|ABEV  |ADRC    |Manufacturing (other)|Ambev is the largest brewer in Latin America and the Caribbean and is Anheuser-Busch InBev|
+|ABLV  |CS      |SIC 73               |Able View Global Inc operates as a brand management partner of international beauty and pe|
+|ABTS  |CS      |SIC 61               |Abits Group Inc is a bitcoin mining company. The Company operates self-owned and hosted bi|
+|ABVX  |ADRC    |SIC 28               |Abivax SA is a France-based clinical-stage biotechnology company focused on developing the|
+|ACB   |CS      |SIC 28               |Aurora Cannabis Inc is focused on the production, distribution, and sale of cannabis produ|
+|ACCL  |CS      |SIC 73               |Acco Group Holdings Ltd is a holding company. Through its Operating Subsidiaries, it is a |
+|ACIU  |CS      |SIC 28               |AC Immune SA is a clinical stage biopharmaceutical company advancing a portfolio of progra|
+|ADAG  |ADRC    |SIC 28               |Adagene Inc is a platform-driven, clinical-stage biotechnology company focused on the disc|
+|ADIG  |CS      |SIC 36               |ADI Global Distribution Inc is a specialty distributor of professionally installed low-vol|
+|ADSE  |CS      |SIC 73               |ADS-TEC Energy PLC produces, develops, and markets battery-buffered EV charging systems in|
+|ADUR  |CS      |SIC 28               |Aduro Clean Technologies Inc is engaged in development and commercialization of its Hydroc|
++------+--------+---------------------+------------------------------------------------------------------------------------------+
+only showing top 15 rows
+
+
+wrote /user/ms16965_nyu_edu/divcap/curated/pseudo_sector
