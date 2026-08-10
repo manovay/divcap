@@ -45,7 +45,7 @@ BATCH = 20
 KEEP = ["ticker", "market", "locale", "type", "active", "last_updated_utc"]
 
 # Pulled from Ticker Overview.
-WANT = ["address", "description", "list_date", "sic_description",
+WANT = ["address", "description", "list_date", "sic_code", "sic_description",
         "market_cap", "total_employees", "weighted_shares_outstanding"]
 
 if "MASSIVE_API_KEY" not in os.environ:

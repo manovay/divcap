@@ -1,0 +1,148 @@
+
+sic_code map: 376 descriptions
+CS+ADRC labelled: 4148   unlabelled: 1291
+deduped on description: 4148 -> 4083 (65 inherited duplicates removed)
+             4-digit: 373 classes |  16 with >=40 rows | 1837/4083 rows kept | largest 10.4%
+ 2-digit major group:  64 classes |  22 with >=40 rows | 3435/4083 rows kept | largest 16.7%
+            division:   8 classes |   8 with >=40 rows | 4083/4083 rows kept | largest 41.9%
+
+=== training on: major_lbl ===
+training rows: 4083, classes: 23
++---------+-----+-----+
+|label_str|count|pct  |
++---------+-----+-----+
+|SIC 28   |683  |16.73|
+|OTHER    |648  |15.87|
+|SIC 73   |460  |11.27|
+|SIC 60   |298  |7.3  |
+|SIC 67   |280  |6.86 |
+|SIC 38   |251  |6.15 |
+|SIC 36   |213  |5.22 |
+|SIC 35   |153  |3.75 |
+|SIC 49   |117  |2.87 |
+|SIC 61   |110  |2.69 |
+|SIC 37   |101  |2.47 |
+|SIC 13   |96   |2.35 |
+|SIC 63   |96   |2.35 |
+|SIC 62   |76   |1.86 |
+|SIC 80   |73   |1.79 |
+|SIC 20   |72   |1.76 |
+|SIC 48   |64   |1.57 |
+|SIC 65   |54   |1.32 |
+|SIC 59   |51   |1.25 |
+|SIC 87   |49   |1.2  |
+|SIC 50   |48   |1.18 |
+|SIC 34   |46   |1.13 |
+|SIC 58   |44   |1.08 |
++---------+-----+-----+
+
+MAJORITY BASELINE: 16.7%  <- the number to beat
+
+train 3262 / test 821
+
+=== RESULT ===
+accuracy      0.682
+weighted F1   0.668
+baseline      0.167
+lift over baseline: +0.515
+
+=== per-class on the test set ===
++---------+---+---+------+
+|label_str|n  |hit|recall|
++---------+---+---+------+
+|SIC 28   |137|120|0.876 |
+|OTHER    |132|99 |0.75  |
+|SIC 73   |82 |63 |0.768 |
+|SIC 60   |68 |68 |1.0   |
+|SIC 38   |57 |35 |0.614 |
+|SIC 36   |57 |38 |0.667 |
+|SIC 67   |47 |38 |0.809 |
+|SIC 35   |39 |15 |0.385 |
+|SIC 61   |27 |10 |0.37  |
+|SIC 49   |22 |14 |0.636 |
+|SIC 37   |22 |7  |0.318 |
+|SIC 20   |19 |9  |0.474 |
+|SIC 63   |18 |13 |0.722 |
+|SIC 13   |14 |10 |0.714 |
+|SIC 50   |13 |0  |0.0   |
+|SIC 80   |13 |4  |0.308 |
+|SIC 62   |12 |8  |0.667 |
+|SIC 48   |11 |4  |0.364 |
+|SIC 59   |9  |0  |0.0   |
+|SIC 58   |8  |4  |0.5   |
+|SIC 65   |6  |1  |0.167 |
+|SIC 87   |4  |0  |0.0   |
+|SIC 34   |4  |0  |0.0   |
++---------+---+---+------+
+
+=== most common confusions ===
++---------+--------+-----+
+|label_str|pred_str|count|
++---------+--------+-----+
+|OTHER    |SIC 73  |14   |
+|SIC 73   |OTHER   |9    |
+|SIC 38   |SIC 28  |8    |
+|SIC 20   |OTHER   |8    |
+|SIC 35   |SIC 36  |7    |
+|SIC 61   |SIC 73  |7    |
+|SIC 28   |OTHER   |7    |
+|SIC 37   |OTHER   |6    |
+|SIC 36   |SIC 73  |6    |
+|OTHER    |SIC 28  |5    |
+|SIC 38   |SIC 73  |5    |
+|SIC 59   |OTHER   |5    |
+|SIC 48   |SIC 73  |5    |
+|SIC 37   |SIC 35  |4    |
+|SIC 38   |OTHER   |4    |
++---------+--------+-----+
+only showing top 15 rows
+
+
+=== pseudo-sector assigned to 1291 unlabelled CS+ADRC ===
++--------+-----+
+|pred_str|count|
++--------+-----+
+|OTHER   |430  |
+|SIC 73  |274  |
+|SIC 28  |163  |
+|SIC 67  |76   |
+|SIC 36  |56   |
+|SIC 60  |51   |
+|SIC 62  |30   |
+|SIC 38  |29   |
+|SIC 49  |25   |
+|SIC 61  |21   |
+|SIC 37  |21   |
+|SIC 35  |20   |
+|SIC 65  |18   |
+|SIC 13  |17   |
+|SIC 48  |16   |
+|SIC 87  |11   |
+|SIC 63  |11   |
+|SIC 20  |10   |
+|SIC 80  |4    |
+|SIC 50  |3    |
++--------+-----+
+only showing top 20 rows
+
++------+--------+--------+------------------------------------------------------------------------------------------+
+|ticker|sec_type|pred_str|desc                                                                                      |
++------+--------+--------+------------------------------------------------------------------------------------------+
+|INCR  |CS      |SIC 28  |Intercure Ltd is engaged in the research, cultivation, production, and distribution of pha|
+|INDO  |CS      |SIC 13  |Indonesia Energy Corp Ltd is an oil and gas exploration and production company focused on |
+|INEO  |CS      |SIC 37  |INNEOVA Holdings Ltd is a Singapore-based provider of Original Equipment Manufacturer (OEM|
+|INFY  |ADRC    |SIC 73  |Infosys is an IT services provider based in Bengaluru, India, with offices in more than 50|
+|ING   |ADRC    |SIC 60  |The merger of the Dutch postal bank and NN Insurance in 1991 created ING. Through a series|
+|INLF  |CS      |SIC 28  |INLIF Ltd, through its subsidiary, is engaged in the research, development, manufacturing,|
+|INMD  |CS      |SIC 38  |InMode Ltd provides minimally and non-invasive surgical aesthetic and medical treatment so|
+|INTJ  |CS      |SIC 87  |Intelligent Group Ltd is a professional services provider in Hong Kong that principally en|
+|INTR  |CS      |SIC 60  |Inter & Co Inc operates as a digital bank. The company's segment includes Banking & Spendi|
+|INVZ  |CS      |SIC 73  |Innoviz Technologies Ltd is a provider of LiDAR technology, serving as a Tier 1 supplier t|
+|IOND  |CS      |SIC 61  |Ionic Digital Inc intends to be a leading bitcoin mining company, as part of the digital a|
+|IONR  |ADRC    |OTHER   |Ioneer Ltd is a mineral exploration and development company. The company's focus is on the|
+|IOTR  |CS      |SIC 36  |iOThree Ltd is a provider of maritime digital technologies, including satellite connectivi|
+|IPHA  |ADRC    |SIC 28  |Innate Pharma SA is a clinical-stage biotechnology company. It is engaged in developing im|
+|IPVV  |CS      |SIC 67  |InterPrivate Investment Partners V Inc is a blank check company formed for the purpose of |
++------+--------+--------+------------------------------------------------------------------------------------------+
+only showing top 15 rows
+
