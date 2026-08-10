@@ -1,0 +1,19 @@
+{
+  "team": "/user/ms16965_nyu_edu/divcap",
+  "grain_path": "/user/ms16965_nyu_edu/divcap/curated/div_event_grain",
+  "panel_path": "/user/ms16965_nyu_edu/divcap/curated/div_event_panel",
+  "metadata_path": "/user/ms16965_nyu_edu/divcap/reference/tickers_all_5y_metadata.jsonl",
+  "output_root": "/user/ms16965_nyu_edu/divcap/m2/cross_sectional",
+  "sic_description_column": "sic_description",
+  "market_ticker": "SPY",
+  "min_history_days": 1640,
+  "bucket_count": 5,
+  "min_cell_n": 30,
+  "event_offset_min": -4,
+  "event_offset_max": 3,
+  "primary_metric": "capture_ret_abn",
+  "secondary_metric": "capture_ret",
+  "academic_metric": "drop_ratio",
+  "metric_tolerance": 1e-08,
+  "report_top_sic_n": 20
+}
