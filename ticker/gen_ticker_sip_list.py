@@ -12,10 +12,10 @@ Run:
     # default: 2026-08
     spark-submit --master yarn --deploy-mode client \
         --num-executors 4 --executor-memory 4g --executor-cores 2 \
-        dividends/gen_ticker_sip_list.py
+        gen_ticker_sip_list.py
 
     # one or more months, as YYYY-MM
-    spark-submit ... dividends/gen_ticker_sip_list.py 2026-07 2026-08
+    spark-submit ... gen_ticker_sip_list.py 2026-07 2026-08
 
 Inputs  (HDFS):  $TEAM/probe/day_<YYYY-MM>/*.csv.gz
 Outputs (HDFS):  $TEAM/curated/ticker_sip_list       (single csv, no header)
