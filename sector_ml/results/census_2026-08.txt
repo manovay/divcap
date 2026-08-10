@@ -1,0 +1,144 @@
+
+=== rows: 20729 (expect 20729) ===
+
+=== Q1/Q2  has_desc x has_sic, all rows ===
++--------+-------+-----+
+|has_desc|has_sic|count|
++--------+-------+-----+
+|   false|  false|12762|
+|   false|   true|  517|
+|    true|  false| 2139|
+|    true|   true| 5311|
++--------+-------+-----+
+
+=== same, but description >= 80 chars (desc_usable) ===
++-----------+-------+-----+
+|desc_usable|has_sic|count|
++-----------+-------+-----+
+|      false|  false|13064|
+|      false|   true|  966|
+|       true|  false| 1837|
+|       true|   true| 4862|
++-----------+-------+-----+
+
+=== the two cells that matter, split by active ===
++-----------------------+------+-----+
+|cell                   |active|count|
++-----------------------+------+-----+
+|FILLABLE (desc, no sic)|true  |1837 |
+|TRAIN (desc+sic)       |true  |4862 |
++-----------------------+------+-----+
+
+=== FILLABLE rows by security type -- who are we actually filling? ===
++--------+-----+
+|sec_type|count|
++--------+-----+
+|CS      |941  |
+|ADRC    |350  |
+|FUND    |330  |
+|WARRANT |102  |
+|PFD     |63   |
+|UNIT    |37   |
+|SP      |7    |
+|ETV     |4    |
+|ETF     |3    |
++--------+-----+
+
+=== rows with NEITHER -- unreachable by this method, must stay 'unknown' ===
++--------+-----+
+|sec_type|count|
++--------+-----+
+|ETF     |6290 |
+|CS      |3171 |
+|WARRANT |1331 |
+|UNIT    |905  |
+|PFD     |295  |
+|RIGHT   |233  |
+|ADRC    |192  |
+|UNKNOWN |190  |
+|FUND    |130  |
+|ETS     |129  |
+|SP      |106  |
+|ETN     |79   |
+|ETV     |11   |
+|INDEX   |2    |
++--------+-----+
+
+
+=== Q3  labelled training rows: 4862 ===
+distinct sic_description among training rows: 373
+classes with >= 50 rows: 16  covering 2351/4862 rows (48.4%)
+-> 357 classes are too small to learn; they need collapsing into a coarser bucket or dropping.
+
+=== top 30 classes -- note the majority-class share ===
++--------------------------------------------------------+-----+----+
+|sic_description                                         |count|pct |
++--------------------------------------------------------+-----+----+
+|PHARMACEUTICAL PREPARATIONS                             |442  |9.09|
+|REAL ESTATE INVESTMENT TRUSTS                           |316  |6.5 |
+|BLANK CHECKS                                            |216  |4.44|
+|STATE COMMERCIAL BANKS                                  |191  |3.93|
+|SERVICES-PREPACKAGED SOFTWARE                           |179  |3.68|
+|BIOLOGICAL PRODUCTS, (NO DIAGNOSTIC SUBSTANCES)         |153  |3.15|
+|NATIONAL COMMERCIAL BANKS                               |153  |3.15|
+|SURGICAL & MEDICAL INSTRUMENTS & APPARATUS              |118  |2.43|
+|FINANCE SERVICES                                        |108  |2.22|
+|SEMICONDUCTORS & RELATED DEVICES                        |82   |1.69|
+|SERVICES-BUSINESS SERVICES, NEC                         |80   |1.65|
+|CRUDE PETROLEUM & NATURAL GAS                           |75   |1.54|
+|FIRE, MARINE & CASUALTY INSURANCE                       |73   |1.5 |
+|SERVICES-COMPUTER PROCESSING & DATA PREPARATION         |60   |1.23|
+|SERVICES-COMPUTER PROGRAMMING, DATA PROCESSING, ETC.    |53   |1.09|
+|INVESTMENT ADVICE                                       |52   |1.07|
+|ELECTRIC SERVICES                                       |49   |1.01|
+|SERVICES-COMPUTER INTEGRATED SYSTEMS DESIGN             |42   |0.86|
+|MISCELLANEOUS ELECTRICAL MACHINERY, EQUIPMENT & SUPPLIES|39   |0.8 |
+|RETAIL-EATING PLACES                                    |39   |0.8 |
+|SECURITY BROKERS, DEALERS & FLOTATION COMPANIES         |39   |0.8 |
+|REAL ESTATE                                             |38   |0.78|
+|SAVINGS INSTITUTION, FEDERALLY CHARTERED                |35   |0.72|
+|MOTOR VEHICLE PARTS & ACCESSORIES                       |33   |0.68|
+|LIFE INSURANCE                                          |29   |0.6 |
+|ELECTRIC & OTHER SERVICES COMBINED                      |28   |0.58|
+|ORTHOPEDIC, PROSTHETIC & SURGICAL APPLIANCES & SUPPLIES |28   |0.58|
+|INSURANCE AGENTS, BROKERS & SERVICE                     |27   |0.56|
+|SAVINGS INSTITUTIONS, NOT FEDERALLY CHARTERED           |25   |0.51|
+|SERVICES-MANAGEMENT CONSULTING SERVICES                 |25   |0.51|
++--------------------------------------------------------+-----+----+
+only showing top 30 rows
+
+MAJORITY-CLASS BASELINE: always predict 'PHARMACEUTICAL PREPARATIONS' -> 9.1% accuracy on 373 classes.
+Any accuracy figure reported for the model has to be compared to that.
+
+=== Q4  description length on training rows ===
++---+---+------+---+---+
+|min|p25|median|p75|max|
++---+---+------+---+---+
+| 81|485|   628|746|843|
++---+---+------+---+---+
+
+BLANK CHECKS (SPAC) training rows: 216 (4.4%)
+SPAC descriptions are near-identical boilerplate with a distinctive SIC. A large share here means headline accuracy is inflated by an easy class -- report per-class metrics, not just accuracy.
+
+=== sample FILLABLE descriptions -- are these sector-informative? ===
++------+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|ticker|sec_type|desc                                                                                                                                                            |
++------+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|AAC.U |UNIT    |Ares Acquisition Corp III is a blank check company formed for the purpose of effecting a merger, share exchange, asset acquisition, share purchase, reorganizati|
+|AACG  |ADRC    |ATA Creativity Global is an international educational services company focused on providing quality learning experiences that cultivate and enhance students' cr|
+|AADX  |CS      |Applied Aerospace & Defense Inc specializes in providing engineering and vertically integrated manufacturing solutions for space and defense technology companie|
+|AAPG  |ADRC    |Ascentage Pharma Group International is a clinical-stage biotechnology company engaged in the development and sales of novel small-scale therapies for cancers, |
+|AAUC  |CS      |Allied Gold Corp is a company focused on gold mining activities in Africa. Allied has three mines and several development and exploration projects in Africa, wh|
+|ABEV  |ADRC    |Ambev is the largest brewer in Latin America and the Caribbean and is Anheuser-Busch InBev's subsidiary in the region. It produces, distributes, and sells beer |
+|ABLV  |CS      |Able View Global Inc operates as a brand management partner of international beauty and personal care brands in China. It provides full-service solutions coveri|
+|ABLVW |WARRANT |Able View Global Inc operates as a brand management partner of international beauty and personal care brands in China. It provides full-service solutions coveri|
+|ABTS  |CS      |Abits Group Inc is a bitcoin mining company. The Company operates self-owned and hosted bitcoin mining facilities in Tennessee, United States.                  |
+|ABVX  |ADRC    |Abivax SA is a France-based clinical-stage biotechnology company focused on developing therapeutics that harness the body's natural regulatory mechanisms to sta|
+|ACB   |CS      |Aurora Cannabis Inc is focused on the production, distribution, and sale of cannabis products in Canada and internationally. The Company conducts the production|
+|ACCL  |CS      |Acco Group Holdings Ltd is a holding company. Through its Operating Subsidiaries, it is a multi-disciplinary, IT-driven corporate service provider with a presen|
+|ACIU  |CS      |AC Immune SA is a clinical stage biopharmaceutical company advancing a portfolio of programs strategically focused on pioneering Precision Medicine for neurodeg|
+|ACP   |FUND    |abrdn Income Credit Strategies Fund is a diversified, closed-end management investment company. Its investment objective is to seek a high level of current inco|
+|ACPpA |PFD     |abrdn Income Credit Strategies Fund is a diversified, closed-end management investment company. Its investment objective is to seek a high level of current inco|
++------+--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+only showing top 15 rows
+

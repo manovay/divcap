@@ -1,0 +1,35 @@
+
+=== reference: 13080 active tickers, one row each ===
+=== dividend events: 165888 (expect 165888) ===
+
+=== EVENTS by bucket -- this is the number that matters ===
++-----------+------+-------+-------------+
+|bucket     |events|tickers|pct_of_events|
++-----------+------+-------+-------------+
+|UNREACHABLE|78406 |4113   |47.26        |
+|TRAIN      |37557 |2102   |22.64        |
+|FILLABLE   |25921 |868    |15.63        |
+|NO_METADATA|21373 |1899   |12.88        |
+|SIC_ONLY   |2631  |134    |1.59         |
++-----------+------+-------+-------------+
+
+=== FILLABLE events by security type -- who actually distributes ===
++--------+------+-------+
+|sec_type|events|tickers|
++--------+------+-------+
+|FUND    |17066 |328    |
+|CS      |5309  |285    |
+|ADRC    |2028  |182    |
+|PFD     |1250  |63     |
+|SP      |218   |7      |
+|ETF     |50    |3      |
++--------+------+-------+
+
+=== how many FILLABLE tickers carry ZERO events (dead weight) ===
+fillable tickers: 1837  |  with >=1 event: 868  |  zero events: 969
+
+=== VERDICT ===
+events with SIC today            : 40188 (24.2% of all events)
+events the model could label     : 25921 (+15.6pp)
+events reachable by neither      : 99779
+Build the model if the middle line is a meaningful lift. If it is a few hundred events, report the coverage ceiling and spend the time on the M2 cross-sectional groupBy.
