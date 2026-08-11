@@ -42,7 +42,7 @@ def default_input_path():
 
 
 DEFAULT_INPUT = default_input_path()
-DEFAULT_OUTPUT_DIR = str(Path(__file__).resolve().parent / "results")
+DEFAULT_OUTPUT_DIR = str(REPO_ROOT / "predictive_model_results")
 
 
 def is_csv_input_path(input_path):
@@ -305,7 +305,7 @@ def train_model(spark, input_path, output_dir, cv_folds=3):
 def main():
     parser = argparse.ArgumentParser(description="Train a Spark MLlib model for dividend capture profitability")
     parser.add_argument("--input", default=DEFAULT_INPUT, help="Path to the dividend-event grain CSV or parquet directory")
-    parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR, help="Directory to save the trained model and report")
+    parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR, help="Local directory to save the trained model and report")
     parser.add_argument("--local", action="store_true", help="Run Spark locally for development")
     parser.add_argument("--cv-folds", type=int, default=3, help="Number of cross-validation folds")
     args = parser.parse_args()
@@ -316,6 +316,7 @@ def main():
         builder = SparkSession.builder.appName("dividend-capture-model")
 
     spark = builder.getOrCreate()
+    spark.sparkContext.setLogLevel("ERROR")
     try:
         train_model(spark, args.input, args.output_dir, cv_folds=args.cv_folds)
     finally:
