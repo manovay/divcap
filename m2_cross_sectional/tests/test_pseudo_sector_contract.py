@@ -13,7 +13,7 @@ PATH = "/team/curated/pseudo_sector"
 
 
 class PseudoSectorContractTests(unittest.TestCase):
-    def test_normalization_trims_without_lowercasing_labels(self):
+    def test_normalization_trims_without_case_folding_tickers_or_labels(self):
         lookup, audit = job.validate_pseudo_records(
             [
                 {
@@ -30,8 +30,19 @@ class PseudoSectorContractTests(unittest.TestCase):
             "hybrid",
             PATH,
         )
-        self.assertEqual(lookup["ABC"]["pseudo_sector"], "SIC 60")
+        self.assertEqual(lookup["abc"]["pseudo_sector"], "SIC 60")
         self.assertEqual(audit["blank_label_count"], 1)
+
+    def test_case_distinct_vendor_tickers_remain_distinct(self):
+        lookup, _ = job.validate_pseudo_records(
+            [
+                {"ticker": "CPK", "pseudo_sector": "SIC 49", "label_level": "hybrid"},
+                {"ticker": "CpK", "pseudo_sector": "SIC 67", "label_level": "hybrid"},
+            ],
+            "hybrid",
+            PATH,
+        )
+        self.assertEqual(set(lookup), {"CPK", "CpK"})
 
     def test_missing_required_schema_names_path_and_found_columns(self):
         for missing in ("ticker", "pseudo_sector", "label_level"):

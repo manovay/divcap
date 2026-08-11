@@ -102,7 +102,7 @@ def load_pseudo_sector(
     )
     normalized = (
         raw.select(
-            F.upper(F.trim(F.col("ticker").cast("string"))).alias("ticker"),
+            F.trim(F.col("ticker").cast("string")).alias("ticker"),
             F.trim(F.col("pseudo_sector").cast("string")).alias("pseudo_sector"),
             F.trim(F.col("label_level").cast("string")).alias("label_level"),
             sec_type.alias("sec_type"),

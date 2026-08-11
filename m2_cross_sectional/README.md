@@ -73,9 +73,10 @@ pseudo_sector
 label_level
 ```
 
-`sec_type` is optional and audit-only. Tickers are trimmed and uppercased to
-match the validated event-grain key; label text and level are trimmed without
-case folding. Blank rows and exact duplicates are audited. Conflicting labels
+`sec_type` is optional and audit-only. Tickers are trimmed without case folding
+so case-sensitive vendor identifiers such as `CPK` and `CpK` remain distinct;
+label text and level are also trimmed without case folding. Blank rows and exact
+duplicates are audited. Conflicting labels
 or levels by ticker, an absent configured label level, non-uniqueness after
 filtering, a row-multiplying join, zero recovered events, or reconciliation
 failure blocks both preflight and final mode. Matches on direct-SIC-known rows
@@ -133,7 +134,7 @@ python3 -m compileall -q m2_cross_sectional/m2lib
 python3 -m unittest discover -s m2_cross_sectional/tests -p 'test_*.py' -v
 ```
 
-On a Spark gateway, exercise the two tiny-DataFrame integration tests through
+On a Spark gateway, exercise the three tiny-DataFrame integration tests through
 Spark's launcher so Java and Spark environment variables are configured:
 
 ```bash
@@ -141,7 +142,7 @@ spark-submit --master local[1] --deploy-mode client \
   m2_cross_sectional/tests/test_spark_contract.py -v
 ```
 
-Plain `python3` discovery skips those two tests when PySpark is missing or its
+Plain `python3` discovery skips those three tests when PySpark is missing or its
 local Java gateway cannot start. The explicit `spark-submit` run is the runtime
 acceptance check and must pass on the cluster.
 

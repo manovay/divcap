@@ -22,20 +22,20 @@ def enrich_sector_states(
     """Join pseudo labels many-to-one and create disjoint coverage states."""
     before_rows = base.count()
     base_tickers = base.select("ticker").distinct().count()
-    noncanonical_tickers = base.filter(
+    invalid_tickers = base.filter(
         F.col("ticker").isNull()
-        | (F.col("ticker") != F.upper(F.trim(F.col("ticker").cast("string"))))
+        | (F.col("ticker") != F.trim(F.col("ticker").cast("string")))
     ).count()
-    if noncanonical_tickers:
+    if invalid_tickers:
         raise M2ValidationError(
             "Event grain ticker normalization is incompatible with the pseudo "
-            f"join: {noncanonical_tickers} base row(s) are null, untrimmed, or "
-            "not uppercase. Normalize the upstream grain ticker key and retry."
+            f"join: {invalid_tickers} base row(s) are null or untrimmed. "
+            "Normalize the upstream grain ticker key and retry."
         )
     joined = (
         base.withColumn(
             "_pseudo_join_ticker",
-            F.upper(F.trim(F.col("ticker").cast("string"))),
+            F.trim(F.col("ticker").cast("string")),
         )
         .join(F.broadcast(pseudo_lookup), "_pseudo_join_ticker", "left")
         .drop("_pseudo_join_ticker")

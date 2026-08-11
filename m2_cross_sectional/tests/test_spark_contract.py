@@ -92,6 +92,42 @@ class SparkContractTests(unittest.TestCase):
         self.assertIsNone(row["stddev_capture_ret_abn"])
         self.assertFalse(row["report_eligible_flag"])
 
+    def test_case_preserving_join_does_not_merge_distinct_tickers(self):
+        base = self.spark.createDataFrame(
+            [("CPK", "UNKNOWN"), ("CpK", "UNKNOWN")],
+            "ticker string, sic_description string",
+        )
+        lookup = self.spark.createDataFrame(
+            [("CPK", "SIC 49", "hybrid", "CS")],
+            "_pseudo_join_ticker string, pseudo_sector string, label_level string, pseudo_sec_type string",
+        )
+        enriched, _, _, counts = job.enrich_sector_states(
+            self.spark,
+            base,
+            lookup,
+            {
+                "configured_label_level": "hybrid",
+                "pseudo_sector_path": "/fixture",
+                "observed_label_levels_json": '["hybrid"]',
+                "source_rows": 1,
+                "source_tickers": 1,
+                "source_labels": 1,
+                "conflicting_ticker_count": 0,
+                "conflicting_level_ticker_count": 0,
+                "blank_ticker_count": 0,
+                "blank_label_count": 0,
+                "blank_label_level_count": 0,
+                "duplicate_identical_row_count": 0,
+            },
+        )
+        states = {
+            row["ticker"]: row["sector_state"]
+            for row in enriched.select("ticker", "sector_state").collect()
+        }
+        self.assertEqual(states["CPK"], "pseudo_recovered")
+        self.assertEqual(states["CpK"], "still_unresolved")
+        self.assertEqual(counts["join_row_delta"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

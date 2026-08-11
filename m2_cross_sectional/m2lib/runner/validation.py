@@ -17,10 +17,10 @@ def validate_model_feature_columns(columns: Iterable[str]) -> List[str]:
 
 
 def normalize_ticker_value(value: Any) -> Optional[str]:
-    """Normalize join keys explicitly while preserving label case."""
+    """Trim join keys while preserving case-sensitive vendor identifiers."""
     if value is None:
         return None
-    normalized = str(value).strip().upper()
+    normalized = str(value).strip()
     return normalized or None
 
 
