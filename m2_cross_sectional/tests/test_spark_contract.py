@@ -31,7 +31,8 @@ class SparkContractTests(unittest.TestCase):
         except Exception as exc:
             raise unittest.SkipTest(
                 "PySpark is importable but its local Java gateway is unavailable; "
-                "run this file with spark-submit --master local[1]"
+                "run this file with spark-submit --master local[1] "
+                "--deploy-mode client"
             ) from exc
 
     @classmethod

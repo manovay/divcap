@@ -137,7 +137,7 @@ On a Spark gateway, exercise the two tiny-DataFrame integration tests through
 Spark's launcher so Java and Spark environment variables are configured:
 
 ```bash
-spark-submit --master local[1] \
+spark-submit --master local[1] --deploy-mode client \
   m2_cross_sectional/tests/test_spark_contract.py -v
 ```
 
