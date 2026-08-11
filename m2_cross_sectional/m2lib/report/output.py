@@ -139,6 +139,11 @@ def write_results_readme(
         "",
         *[f"- `figures/{filename}`" for filename in FIGURE_OUTPUTS.values()],
         "",
+        "Figure filenames retain the report registry numbers, while visible "
+        "titles and labels use plain business language. Two-digit model labels "
+        "are decoded in the figures—for example, `SIC 73` is displayed as "
+        "`Business Services (SIC 73)`—without changing the canonical CSV value.",
+        "",
         "## Interpretation and provenance",
         "",
         f"- {TAXONOMY_SEPARATION_STATEMENT}",
@@ -146,10 +151,13 @@ def write_results_readme(
         "the canonical CSV retains UNKNOWN and every low-N category.",
         "- Pseudo-sector figures use only direct-SIC-unknown events recovered by "
         "a valid configured-level model prediction; direct-known rows are excluded.",
+        "- A pseudo-sector label such as `SIC 73` is a model-predicted two-digit "
+        "SIC major group, not an observed four-digit company SIC. Hybrid `(other)` "
+        "labels are division-level fallbacks.",
         "- Liquidity means pre-event dollar-volume liquidity / size proxy, not "
         "historical market capitalization.",
         "- Event-time offset 0 is ex-date close-to-close; the ex-open strategy "
-        "exit is shown separately in the overnight table and F12.",
+        "exit is shown separately in the overnight table and overnight figure.",
         f"- {SIC_TEMPORAL_LIMITATION}",
         f"- {PSEUDO_MODEL_LIMITATION}",
         f"- {UPSTREAM_MODEL_METRICS}",

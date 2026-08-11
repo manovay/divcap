@@ -309,13 +309,25 @@ figures/11_event_time_daily_profile.png
 figures/12_event_time_overnight_metrics.png
 ```
 
-F07/F08 exclude `UNKNOWN` and select the largest report-eligible known direct
-SIC descriptions; F09/F10 independently select pseudo categories from the
-recovered population. Canonical CSVs retain every category. Paired performance
-and rate figures use the same deterministic ordering. `section_insights.json`
-and `INSIGHTS_SUMMARY.md` always contain the twelve required sections, source
-each numeric item to a named CSV, suppress low-N headlines, and template the
-gross/cost and taxonomy limitations.
+The reported-industry figures exclude `UNKNOWN` and select the largest
+report-eligible known direct-SIC descriptions. The model-estimated-industry
+figures independently select pseudo categories from the recovered population.
+Canonical CSVs retain every category and every original label. Paired
+performance and rate figures use the same deterministic ordering.
+
+Visible chart labels are presentation-only translations for a business
+audience. Internal figure IDs remain in filenames but are omitted from chart
+titles. Funnel stages, quantile buckets, event-day offsets, units, and metric
+names are written in plain language. A model label such as `SIC 73` is displayed
+as `Business Services (SIC 73)`: the number is a two-digit SIC major-group code,
+not a company-specific four-digit SIC and not an observed label for the
+otherwise-unclassified company. Hybrid fallback labels such as
+`Manufacturing (other)` display as `Other Manufacturing`. The raw labels remain
+unchanged in `pseudo_sector_summary.csv` for traceability.
+
+`section_insights.json` and `INSIGHTS_SUMMARY.md` always contain the twelve
+required sections, source each numeric item to a named CSV, suppress low-N
+headlines, and template the gross/cost and taxonomy limitations.
 
 ## Failure recovery and limitations
 
