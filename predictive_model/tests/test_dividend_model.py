@@ -6,7 +6,7 @@ from pyspark.sql import SparkSession
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from spark_dividend_predictor import prepare_training_frame
+from spark_dividend_predictor import prepare_training_frame, is_csv_input_path
 
 
 class DividendModelTests(unittest.TestCase):
@@ -19,6 +19,11 @@ class DividendModelTests(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.spark.stop()
+
+    def test_is_csv_input_path_detects_csv_directories(self):
+        self.assertTrue(is_csv_input_path("/user/ms16965_nyu_edu/divcap/curated/div_event_grain_csv"))
+        self.assertTrue(is_csv_input_path("/tmp/data.csv"))
+        self.assertFalse(is_csv_input_path("/user/ms16965_nyu_edu/divcap/curated/div_event_grain"))
 
     def test_prepare_training_frame_builds_label_and_features(self):
         sample_rows = [
@@ -74,7 +79,8 @@ class DividendModelTests(unittest.TestCase):
         prepared = prepare_training_frame(df)
 
         self.assertIn("label", prepared.columns)
-        self.assertIn("features", prepared.columns)
+        self.assertIn("cash_amount", prepared.columns)
+        self.assertIn("div_yield", prepared.columns)
         self.assertEqual(prepared.count(), 2)
         self.assertEqual(prepared.filter("label = 1").count(), 1)
 
