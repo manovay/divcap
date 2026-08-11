@@ -133,6 +133,18 @@ python3 -m compileall -q m2_cross_sectional/m2lib
 python3 -m unittest discover -s m2_cross_sectional/tests -p 'test_*.py' -v
 ```
 
+On a Spark gateway, exercise the two tiny-DataFrame integration tests through
+Spark's launcher so Java and Spark environment variables are configured:
+
+```bash
+spark-submit --master local[1] \
+  m2_cross_sectional/tests/test_spark_contract.py -v
+```
+
+Plain `python3` discovery skips those two tests when PySpark is missing or its
+local Java gateway cannot start. The explicit `spark-submit` run is the runtime
+acceptance check and must pass on the cluster.
+
 Pure tests do not require HDFS. Tiny-Spark tests skip with a recorded reason when
 PySpark is unavailable; figure smoke tests do the same when matplotlib is
 unavailable. Those skips are pending runtime checks, not passes.
