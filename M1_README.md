@@ -200,6 +200,8 @@ pipeline computes the right things, not as the answer.
 ## Milestone 2
 
 Two things gate everything: **five years of day aggregates**, and **splits**.
+
+A first-pass Spark MLlib classifier is now implemented in [predictive_model/spark_dividend_predictor.py](predictive_model/spark_dividend_predictor.py). It trains a logistic regression model on the dividend-event grain features to predict whether an event will produce a positive abnormal capture return. See [predictive_model/README.md](predictive_model/README.md) for usage and outputs.
 Every event whose window contains a split has a meaningless drop ratio right
 now — that is a correctness bug, not an enhancement. `/stocks/v1/splits`
 returns execution dates and ratio factors.

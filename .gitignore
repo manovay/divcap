@@ -10,3 +10,5 @@ __pycache__/
 # holding credentials. Negation must come after the pattern it overrides.
 !sample_*.jsonl
 !sample_*.json
+
+.venv/
