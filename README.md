@@ -182,6 +182,4 @@ def load(p):
 - [ ] Spark Structured Streaming scoring against the ex-dividend calendar
 - [ ] MongoDB serving + dashboard
 
-### Housekeeping
-- [ ] **Rotate Massive S3 keys** (exposed in a screenshot during setup)
-- [ ] Consider CRSP via NYU WRDS (free) as a validation layer — cleaner distribution codes and PERMNO identifiers that survive ticker changes
+
