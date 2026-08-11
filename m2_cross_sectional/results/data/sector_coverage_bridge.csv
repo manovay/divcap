@@ -1,0 +1,4 @@
+state_order,sector_state,n_events,event_share_of_base,n_tickers,ticker_share_of_base,label_source
+1,direct_sic_known,38123,0.2363542803293324,2208,0.24506104328523862,direct/current-reference SIC
+2,pseudo_recovered,6735,0.041755530205336774,462,0.05127635960044395,model-predicted pseudo-sector on direct-SIC unknown only
+3,still_unresolved,116438,0.7218901894653308,6343,0.7039955604883463,no usable direct SIC or configured-level pseudo-sector

@@ -1,0 +1,14 @@
+stage_order,stage,stage_type,n_events,prior_stage_n_events,retention_from_prior,cumulative_retention,definition
+1,raw,sequential_filter,163358,163358,1.0,1.0,All event-grain rows
+2,cash_positive,sequential_filter,163358,163358,1.0,1.0,cash_amount > 0
+3,has_core,sequential_filter,161316,163358,0.9874998469618874,0.9874998469618874,cash positive and has_core = true
+4,window_contiguous,sequential_filter,161316,161316,1.0,0.9874998469618874,"cash positive, has_core, and window_contiguous = true"
+5,benchmark_excluded,sequential_filter,161296,161316,0.9998760197376577,0.9873774164717981,Base conditions with benchmark ticker SPY excluded
+6,yield_usable,analysis_population,161296,161296,1.0,0.9873774164717981,Base plus div_yield
+7,volatility_usable,analysis_population,160819,161296,0.9970427040968158,0.9844574492831695,Base plus pre_vol
+8,liquidity_usable,analysis_population,161296,161296,1.0,0.9873774164717981,Base plus pre_avg_dollar_volume
+9,sic_known,analysis_population,38123,161296,0.2363542803293324,0.23337087868362738,Base with known sic_description
+10,sic_unknown,analysis_population,123173,161296,0.7636457196706676,0.7540065377881707,Base with UNKNOWN sic_description
+11,full_event_time_window,analysis_population,158413,161296,0.9821260291637735,0.9697290613254325,Base with n_bars = 9
+12,pseudo_recovered,analysis_population,6735,161296,0.041755530205336774,0.04122846753755555,Direct-SIC-unknown base events recovered by configured-level model-predicted pseudo-sector
+13,still_unresolved,analysis_population,116438,161296,0.7218901894653308,0.7127780702506152,Direct-SIC-unknown base events without a valid pseudo-sector match

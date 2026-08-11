@@ -1,0 +1,19 @@
+metric,value,description
+base_events,161296,Accepted base events
+base_tickers,9010,Accepted base tickers
+distinct_ex_ym,61,Event year-months
+grain_path,/user/ms16965_nyu_edu/divcap/curated/div_event_grain,M1 event-grain input
+grain_row_count,163358,Input grain rows
+history_span_days,1824,Calendar-day history span
+market_ticker_event_count,20,Input grain rows matching the excluded benchmark
+market_ticker_excluded,SPY,Benchmark excluded from analyses and model handoffs
+max_ex_date,2026-08-07,Maximum event ex-date
+metadata_path,/user/ms16965_nyu_edu/divcap/reference/tickers_all_5y_metadata.jsonl,Direct SIC fallback
+min_ex_date,2021-08-09,Minimum event ex-date
+panel_path,/user/ms16965_nyu_edu/divcap/curated/div_event_panel,M1 event-panel input
+panel_row_count,1470222,Input panel rows
+pseudo_sector_label_level,hybrid,Configured pseudo-sector label level
+pseudo_sector_path,/user/ms16965_nyu_edu/divcap/curated/pseudo_sector,Model-predicted pseudo-sector input
+run_id,m2_v2_20260811T064045Z,Requested immutable run ID
+run_root,/user/ms16965_nyu_edu/divcap/m2/cross_sectional/m2_v2_20260811T064045Z,Immutable HDFS output root
+sic_source,metadata,grain or metadata enrichment

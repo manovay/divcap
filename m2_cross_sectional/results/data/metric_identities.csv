@@ -1,0 +1,6 @@
+identity,eligible_rows,violation_rows,max_abs_error,tolerance
+abn_overnight_ret_equals_stock_minus_market,161316,0,0.0,1e-08
+capture_ret_abn_equals_capture_ret_minus_market,161316,0,0.0,1e-08
+capture_ret_equals_div_yield_minus_drop_pct,161316,0,9.063930161978817e-17,1e-08
+drop_pct_equals_drop_ratio_times_div_yield,161316,0,1.1102230246251565e-16,1e-08
+stock_overnight_ret_equals_negative_drop_pct,161316,0,4.440892098500626e-16,1e-08

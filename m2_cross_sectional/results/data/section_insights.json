@@ -1,0 +1,765 @@
+{
+  "generated_at_utc": "2026-08-11T07:00:57.347011+00:00",
+  "insight_generation_version": "m2-cross-sectional-v2-1",
+  "run_id": "m2_v2_20260811T064045Z",
+  "sections": [
+    {
+      "business_interpretation": "The accepted aggregates describe where gross capture outcomes differ in this sample and which data-quality or coverage gaps remain most material.",
+      "caveats": [
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled.",
+        "Direct/current-reference SIC and model-predicted pseudo-sector are kept in separate analytical populations; the coverage bridge is not a blended sector-performance taxonomy."
+      ],
+      "evidence": [
+        {
+          "display_value": "161,296",
+          "metric": "base_events",
+          "source_table": "overall_summary.csv",
+          "value": 161296
+        },
+        {
+          "display_value": "9,010",
+          "metric": "base_tickers",
+          "source_table": "overall_summary.csv",
+          "value": 9010
+        },
+        {
+          "display_value": "2021-08-09",
+          "metric": "min_ex_date",
+          "source_table": "input_summary.csv",
+          "value": "2021-08-09"
+        },
+        {
+          "display_value": "2026-08-07",
+          "metric": "max_ex_date",
+          "source_table": "input_summary.csv",
+          "value": "2026-08-07"
+        },
+        {
+          "display_value": "9.97 bps",
+          "metric": "mean_capture_ret_abn",
+          "source_table": "overall_summary.csv",
+          "value": 0.0009966901312417336
+        },
+        {
+          "display_value": "5.90 bps",
+          "metric": "median_capture_ret_abn",
+          "source_table": "overall_summary.csv",
+          "value": 0.0005899089134465954
+        },
+        {
+          "display_value": "76.4%",
+          "metric": "direct_sic_unknown_share",
+          "source_table": "sic_coverage.csv",
+          "value": 0.7636457196706676
+        },
+        {
+          "display_value": "5.5%",
+          "metric": "pseudo_recovery_rate_of_sic_unknown",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 0.05467919105648154
+        },
+        {
+          "display_value": "24.28 bps (yield)",
+          "metric": "strongest_ordered_high_minus_low_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 24.27736249367291
+        },
+        {
+          "display_value": "offset +0: -87.14 bps",
+          "metric": "largest_abs_event_time_mean",
+          "source_table": "event_time_daily.csv",
+          "value": -0.008714477915513887
+        }
+      ],
+      "headline": "161,296 accepted events across 9,010 tickers from 2021-08-09 to 2026-08-07; overall mean/median abnormal capture 9.97 bps / 5.90 bps; direct-SIC unknown 76.4%; pseudo recovery among unknown 5.5%; largest ordered high-minus-low spread 24.28 bps in yield; largest absolute daily event-time mean at offset +0: -87.14 bps.",
+      "recommended_next_step": "Prioritize stability, cost, point-in-time taxonomy, and clustered-inference checks before treating any descriptive pattern as decision-ready.",
+      "section_id": "executive_summary",
+      "status": "informative",
+      "title": "Executive summary"
+    },
+    {
+      "business_interpretation": "The funnel separates acceptance filters from downstream analysis-population diagnostics, preserving exact denominators.",
+      "caveats": [
+        "Corporate-action contamination in upstream unadjusted prices remains an upstream limitation."
+      ],
+      "evidence": [
+        {
+          "display_value": "163,358",
+          "metric": "raw_events",
+          "source_table": "sample_funnel.csv",
+          "value": 163358
+        },
+        {
+          "display_value": "161,296",
+          "metric": "base_events",
+          "source_table": "sample_funnel.csv",
+          "value": 161296
+        },
+        {
+          "display_value": "98.7%",
+          "metric": "base_cumulative_retention",
+          "source_table": "sample_funnel.csv",
+          "value": 0.9873774164717981
+        },
+        {
+          "display_value": "2021-08-09",
+          "metric": "min_ex_date",
+          "source_table": "input_summary.csv",
+          "value": "2021-08-09"
+        },
+        {
+          "display_value": "2026-08-07",
+          "metric": "max_ex_date",
+          "source_table": "input_summary.csv",
+          "value": "2026-08-07"
+        },
+        {
+          "display_value": "1,824 days",
+          "metric": "history_span_days",
+          "source_table": "input_summary.csv",
+          "value": 1824
+        },
+        {
+          "display_value": "2,042 at has_core",
+          "metric": "largest_filter_loss_events",
+          "source_table": "sample_funnel.csv",
+          "value": 2042
+        },
+        {
+          "display_value": "0",
+          "metric": "metric_identity_violations",
+          "source_table": "metric_identities.csv",
+          "value": 0
+        }
+      ],
+      "headline": "From 2021-08-09 to 2026-08-07 (1824 calendar days), the base retained 161,296 of 163,358 raw events (98.7%); the largest sequential loss was 2,042 events at has_core, and metric-identity violations totaled 0.",
+      "recommended_next_step": "Confirm the live key, history-span, and identity gates in the accepted-run review and investigate any future retention shift.",
+      "section_id": "data_quality",
+      "status": "informative",
+      "title": "Data quality and sample funnel"
+    },
+    {
+      "business_interpretation": "Recovery expands coverage accounting for otherwise-unknown events while keeping observed/current-reference and model-derived taxonomies analytically separate.",
+      "caveats": [
+        "Direct/current-reference SIC and model-predicted pseudo-sector are kept in separate analytical populations; the coverage bridge is not a blended sector-performance taxonomy.",
+        "The upstream pseudo-sector output has no prediction-confidence, model-version, or training-timestamp field and is structurally limited to active CS/ADRC rows with usable descriptions."
+      ],
+      "evidence": [
+        {
+          "display_value": "38,123",
+          "metric": "direct_sic_known_events",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 38123
+        },
+        {
+          "display_value": "123,173",
+          "metric": "direct_sic_unknown_events",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 123173
+        },
+        {
+          "display_value": "6,735",
+          "metric": "pseudo_recovered_events",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 6735
+        },
+        {
+          "display_value": "5.5%",
+          "metric": "pseudo_recovery_rate_of_sic_unknown",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 0.05467919105648154
+        },
+        {
+          "display_value": "116,438",
+          "metric": "still_unresolved_events",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 116438
+        },
+        {
+          "display_value": "27.8%",
+          "metric": "coverage_after_recovery_share",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 0.27810981053466916
+        }
+      ],
+      "headline": "Direct SIC was known for 38,123 base events and unknown for 123,173; model-predicted pseudo-sector recovered 6,735 unknown events (5.5%), leaving 116,438 unresolved.",
+      "recommended_next_step": "Track residual coverage by security type and obtain versioned/confidence-bearing upstream predictions before broader use.",
+      "section_id": "sector_coverage",
+      "status": "limited_coverage",
+      "title": "Sector coverage and pseudo-sector recovery"
+    },
+    {
+      "business_interpretation": "Mean, median, rate, and drop-ratio evidence should be read together because each summarizes a different aspect of the outcome distribution.",
+      "caveats": [
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled.",
+        "The unadjusted descriptive intervals do not account for dependence within ticker or calendar date."
+      ],
+      "evidence": [
+        {
+          "display_value": "9.97 bps",
+          "metric": "mean_capture_ret_abn",
+          "source_table": "overall_summary.csv",
+          "value": 0.0009966901312417336
+        },
+        {
+          "display_value": "5.90 bps",
+          "metric": "median_capture_ret_abn",
+          "source_table": "overall_summary.csv",
+          "value": 0.0005899089134465954
+        },
+        {
+          "display_value": "13.12 bps",
+          "metric": "mean_capture_ret",
+          "source_table": "overall_summary.csv",
+          "value": 0.0013120113524674392
+        },
+        {
+          "display_value": "7.82 bps",
+          "metric": "median_capture_ret",
+          "source_table": "overall_summary.csv",
+          "value": 0.0007823543748475755
+        },
+        {
+          "display_value": "54.6%",
+          "metric": "positive_capture_ret_abn_rate",
+          "source_table": "overall_summary.csv",
+          "value": 0.5459651820255927
+        },
+        {
+          "display_value": "0.870",
+          "metric": "median_drop_ratio",
+          "source_table": "overall_summary.csv",
+          "value": 0.8695652173913035
+        },
+        {
+          "display_value": "0.270",
+          "metric": "p25_drop_ratio",
+          "source_table": "overall_summary.csv",
+          "value": 0.26950354609928756
+        },
+        {
+          "display_value": "1.365",
+          "metric": "p75_drop_ratio",
+          "source_table": "overall_summary.csv",
+          "value": 1.365257851880574
+        },
+        {
+          "display_value": "59.1%",
+          "metric": "drop_ratio_lt_1_rate",
+          "source_table": "overall_summary.csv",
+          "value": 0.5905168138081539
+        }
+      ],
+      "headline": "Across 161,296 events, mean and median gross abnormal capture were 9.97 bps and 5.90 bps; 54.6% of valid observations were positive.",
+      "recommended_next_step": "Add transaction-cost/tax scenarios and ticker/date-clustered uncertainty in a separately specified validation stage.",
+      "section_id": "overall",
+      "status": "informative",
+      "title": "Overall dividend-capture performance"
+    },
+    {
+      "business_interpretation": "The profile prioritizes where deeper stability and implementation-cost checks may be most informative; it is a descriptive association.",
+      "caveats": [
+        "The unadjusted descriptive intervals do not account for dependence within ticker or calendar date.",
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled."
+      ],
+      "evidence": [
+        {
+          "display_value": "1.19 bps",
+          "metric": "low_bucket_mean_capture_ret_abn",
+          "source_table": "yield_summary.csv",
+          "value": 0.00011927496718254599
+        },
+        {
+          "display_value": "25.47 bps",
+          "metric": "high_bucket_mean_capture_ret_abn",
+          "source_table": "yield_summary.csv",
+          "value": 0.0025470112165498367
+        },
+        {
+          "display_value": "0.02 bps",
+          "metric": "low_bucket_median_capture_ret_abn",
+          "source_table": "yield_summary.csv",
+          "value": 2.319944206768845e-06
+        },
+        {
+          "display_value": "17.63 bps",
+          "metric": "high_bucket_median_capture_ret_abn",
+          "source_table": "yield_summary.csv",
+          "value": 0.0017628897155897918
+        },
+        {
+          "display_value": "24.28 bps",
+          "metric": "high_minus_low_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 24.27736249367291
+        },
+        {
+          "display_value": "24.28 bps",
+          "metric": "mean_range_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 24.27736249367291
+        },
+        {
+          "display_value": "10.02 percentage points",
+          "metric": "positive_rate_range_pp",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 10.023560373785735
+        },
+        {
+          "display_value": "4/4 nondecreasing steps",
+          "metric": "monotonic_step_count",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 4
+        },
+        {
+          "display_value": "5",
+          "metric": "actual_bucket_count",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 5
+        }
+      ],
+      "headline": "Low/high bucket mean abnormal capture was 1.19 bps / 25.47 bps, with medians 0.02 bps / 17.63 bps; the high-minus-low mean spread was 24.28 bps and was monotonic in the observed bucket means.",
+      "recommended_next_step": "Repeat the profile by year and security type, then evaluate measured implementation costs without changing the canonical all-sample table.",
+      "section_id": "yield",
+      "status": "informative",
+      "title": "Dividend-yield cross section"
+    },
+    {
+      "business_interpretation": "The profile prioritizes where deeper stability and implementation-cost checks may be most informative; it is a descriptive association.",
+      "caveats": [
+        "The unadjusted descriptive intervals do not account for dependence within ticker or calendar date.",
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled."
+      ],
+      "evidence": [
+        {
+          "display_value": "7.51 bps",
+          "metric": "low_bucket_mean_capture_ret_abn",
+          "source_table": "volatility_summary.csv",
+          "value": 0.0007505971950359554
+        },
+        {
+          "display_value": "14.49 bps",
+          "metric": "high_bucket_mean_capture_ret_abn",
+          "source_table": "volatility_summary.csv",
+          "value": 0.0014488723183881628
+        },
+        {
+          "display_value": "3.36 bps",
+          "metric": "low_bucket_median_capture_ret_abn",
+          "source_table": "volatility_summary.csv",
+          "value": 0.0003358915267384731
+        },
+        {
+          "display_value": "8.73 bps",
+          "metric": "high_bucket_median_capture_ret_abn",
+          "source_table": "volatility_summary.csv",
+          "value": 0.0008734805006327118
+        },
+        {
+          "display_value": "6.98 bps",
+          "metric": "high_minus_low_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 6.982751233522072
+        },
+        {
+          "display_value": "6.98 bps",
+          "metric": "mean_range_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 6.982751233522072
+        },
+        {
+          "display_value": "3.21 percentage points",
+          "metric": "positive_rate_range_pp",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 3.211665215769177
+        },
+        {
+          "display_value": "4/4 nondecreasing steps",
+          "metric": "monotonic_step_count",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 4
+        },
+        {
+          "display_value": "5",
+          "metric": "actual_bucket_count",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 5
+        }
+      ],
+      "headline": "Low/high bucket mean abnormal capture was 7.51 bps / 14.49 bps, with medians 3.36 bps / 8.73 bps; the high-minus-low mean spread was 6.98 bps and was monotonic in the observed bucket means.",
+      "recommended_next_step": "Repeat the profile by year and security type, then evaluate measured implementation costs without changing the canonical all-sample table.",
+      "section_id": "volatility",
+      "status": "informative",
+      "title": "Pre-event volatility cross section"
+    },
+    {
+      "business_interpretation": "The profile prioritizes where deeper stability and implementation-cost checks may be most informative; it is a descriptive association.",
+      "caveats": [
+        "This dimension is pre-event dollar-volume liquidity / size proxy, not historical market capitalization. The unadjusted descriptive intervals do not account for dependence within ticker or calendar date.",
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled."
+      ],
+      "evidence": [
+        {
+          "display_value": "12.81 bps",
+          "metric": "low_bucket_mean_capture_ret_abn",
+          "source_table": "liquidity_summary.csv",
+          "value": 0.0012811683882807954
+        },
+        {
+          "display_value": "6.23 bps",
+          "metric": "high_bucket_mean_capture_ret_abn",
+          "source_table": "liquidity_summary.csv",
+          "value": 0.000622696953618934
+        },
+        {
+          "display_value": "6.45 bps",
+          "metric": "low_bucket_median_capture_ret_abn",
+          "source_table": "liquidity_summary.csv",
+          "value": 0.0006450686954415203
+        },
+        {
+          "display_value": "3.51 bps",
+          "metric": "high_bucket_median_capture_ret_abn",
+          "source_table": "liquidity_summary.csv",
+          "value": 0.00035143567005619953
+        },
+        {
+          "display_value": "-6.58 bps",
+          "metric": "high_minus_low_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": -6.584714346618618
+        },
+        {
+          "display_value": "7.19 bps",
+          "metric": "mean_range_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 7.18837727969902
+        },
+        {
+          "display_value": "2.86 percentage points",
+          "metric": "positive_rate_range_pp",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 2.8581171146036755
+        },
+        {
+          "display_value": "1/4 nondecreasing steps",
+          "metric": "monotonic_step_count",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 1
+        },
+        {
+          "display_value": "5",
+          "metric": "actual_bucket_count",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 5
+        }
+      ],
+      "headline": "Low/high bucket mean abnormal capture was 12.81 bps / 6.23 bps, with medians 6.45 bps / 3.51 bps; the high-minus-low mean spread was -6.58 bps and was non-monotonic across the observed buckets.",
+      "recommended_next_step": "Repeat the profile by year and security type, then evaluate measured implementation costs without changing the canonical all-sample table.",
+      "section_id": "liquidity",
+      "status": "mixed",
+      "title": "Pre-event dollar-volume liquidity / size-proxy cross section"
+    },
+    {
+      "business_interpretation": "Current-reference direct SIC patterns describe the covered subset only; UNKNOWN remains in the canonical table and coverage section, not the known-label ranking.",
+      "caveats": [
+        "Direct SIC is current-reference metadata and is not guaranteed to be a point-in-time classification.",
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled.",
+        "The unadjusted descriptive intervals do not account for dependence within ticker or calendar date."
+      ],
+      "evidence": [
+        {
+          "display_value": "38,123",
+          "metric": "known_sic_events",
+          "source_table": "sector_diagnostics.csv",
+          "value": 38123
+        },
+        {
+          "display_value": "2,208",
+          "metric": "known_sic_tickers",
+          "source_table": "sector_diagnostics.csv",
+          "value": 2208
+        },
+        {
+          "display_value": "331",
+          "metric": "category_count",
+          "source_table": "sector_diagnostics.csv",
+          "value": 331
+        },
+        {
+          "display_value": "89",
+          "metric": "eligible_category_count",
+          "source_table": "sector_diagnostics.csv",
+          "value": 89
+        },
+        {
+          "display_value": "15.6%",
+          "metric": "top_1_event_share",
+          "source_table": "sector_diagnostics.csv",
+          "value": 0.1560475303622485
+        },
+        {
+          "display_value": "39.3%",
+          "metric": "top_5_event_share",
+          "source_table": "sector_diagnostics.csv",
+          "value": 0.3933845709938882
+        },
+        {
+          "display_value": "47.60 bps (ASSET-BACKED SECURITIES)",
+          "metric": "highest_observed_mean_bps",
+          "source_table": "sector_diagnostics.csv",
+          "value": 47.599024790744295
+        },
+        {
+          "display_value": "-18.39 bps (PIPE LINES (NO NATURAL GAS))",
+          "metric": "lowest_observed_mean_bps",
+          "source_table": "sector_diagnostics.csv",
+          "value": -18.3920983438879
+        },
+        {
+          "display_value": "28.58 bps",
+          "metric": "highest_observed_median_capture_ret_abn",
+          "source_table": "sic_description_summary.csv",
+          "value": 0.0028580861097240538
+        },
+        {
+          "display_value": "-26.20 bps",
+          "metric": "lowest_observed_median_capture_ret_abn",
+          "source_table": "sic_description_summary.csv",
+          "value": -0.002620324339106269
+        },
+        {
+          "display_value": "68.4%",
+          "metric": "highest_observed_positive_rate",
+          "source_table": "sic_description_summary.csv",
+          "value": 0.6838235294117647
+        },
+        {
+          "display_value": "41.6%",
+          "metric": "lowest_observed_positive_rate",
+          "source_table": "sic_description_summary.csv",
+          "value": 0.41605839416058393
+        }
+      ],
+      "headline": "Among 89 report-eligible direct SIC categories, the highest- and lowest-observed means were 47.60 and -18.39 bps; the eligible range was 65.99 bps. Mean, median, and outcome-rate evidence was broadly aligned.",
+      "recommended_next_step": "Obtain point-in-time sector metadata and repeat the direct-SIC profile across time before using category differences for prioritization.",
+      "section_id": "direct_sic",
+      "status": "informative",
+      "title": "Direct SIC description analysis"
+    },
+    {
+      "business_interpretation": "Pseudo-sector dispersion is interpreted against the recovered-population baseline and is not compared as though it shared the direct-SIC universe.",
+      "caveats": [
+        "Pseudo-sector labels are model-derived from current company descriptions and SIC-labelled training rows; M2 does not revalidate the upstream model.",
+        "The upstream hybrid model documents held-out accuracy 0.683 and weighted F1 0.670; these are upstream results, not M2 runtime validation.",
+        "The upstream pseudo-sector output has no prediction-confidence, model-version, or training-timestamp field and is structurally limited to active CS/ADRC rows with usable descriptions.",
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled."
+      ],
+      "evidence": [
+        {
+          "display_value": "6,735",
+          "metric": "pseudo_recovered_events",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 6735
+        },
+        {
+          "display_value": "462",
+          "metric": "pseudo_recovered_tickers",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 462
+        },
+        {
+          "display_value": "5.5%",
+          "metric": "pseudo_recovery_rate_of_sic_unknown",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 0.05467919105648154
+        },
+        {
+          "display_value": "27",
+          "metric": "category_count",
+          "source_table": "sector_diagnostics.csv",
+          "value": 27
+        },
+        {
+          "display_value": "18",
+          "metric": "eligible_category_count",
+          "source_table": "sector_diagnostics.csv",
+          "value": 18
+        },
+        {
+          "display_value": "23.3%",
+          "metric": "top_1_event_share",
+          "source_table": "sector_diagnostics.csv",
+          "value": 0.23325909428359318
+        },
+        {
+          "display_value": "56.4%",
+          "metric": "top_5_event_share",
+          "source_table": "sector_diagnostics.csv",
+          "value": 0.56362286562732
+        },
+        {
+          "display_value": "63.22 bps",
+          "metric": "eligible_mean_range_bps",
+          "source_table": "sector_diagnostics.csv",
+          "value": 63.22072620092671
+        },
+        {
+          "display_value": "45.62 bps (SIC 73)",
+          "metric": "highest_observed_mean_bps",
+          "source_table": "sector_diagnostics.csv",
+          "value": 45.62354212407689
+        },
+        {
+          "display_value": "-17.60 bps (SIC 13)",
+          "metric": "lowest_observed_mean_bps",
+          "source_table": "sector_diagnostics.csv",
+          "value": -17.59718407684982
+        },
+        {
+          "display_value": "24.08 bps",
+          "metric": "pseudo_recovered_eligible_weighted_mean",
+          "source_table": "pseudo_sector_summary.csv",
+          "value": 0.002407602299894802
+        },
+        {
+          "display_value": "hybrid",
+          "metric": "configured_label_level",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": "hybrid"
+        }
+      ],
+      "headline": "Within 6,735 recovered events assigned model-predicted pseudo-sector labels at level hybrid, 18 categories were report-eligible; the highest/lowest observed means were 45.62/-17.60 bps versus the recovered eligible-category weighted baseline 24.08 bps, and the eligible range was 63.22 bps.",
+      "recommended_next_step": "Version the upstream model/output, add calibrated confidence, and test time/security-type stability within the recovered universe.",
+      "section_id": "pseudo_sector",
+      "status": "informative",
+      "title": "Pseudo-sector analysis"
+    },
+    {
+      "business_interpretation": "The close-to-close event curve and ex-open strategy exit are separate measurements and should not be conflated.",
+      "caveats": [
+        "The unadjusted descriptive intervals do not account for dependence within ticker or calendar date.",
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled."
+      ],
+      "evidence": [
+        {
+          "display_value": "+0",
+          "metric": "largest_abs_daily_offset",
+          "source_table": "event_time_daily.csv",
+          "value": 0
+        },
+        {
+          "display_value": "-87.14 bps",
+          "metric": "largest_abs_daily_mean_abn_ret_cc",
+          "source_table": "event_time_daily.csv",
+          "value": -0.008714477915513887
+        },
+        {
+          "display_value": "-87.14 bps",
+          "metric": "offset_zero_mean_abn_ret_cc",
+          "source_table": "event_time_daily.csv",
+          "value": -0.008714477915513887
+        },
+        {
+          "display_value": "6.82 bps",
+          "metric": "pre_offset_average_mean_abn_ret_cc",
+          "source_table": "event_time_daily.csv",
+          "value": 0.000681592458654098
+        },
+        {
+          "display_value": "0.10 bps",
+          "metric": "post_offset_average_mean_abn_ret_cc",
+          "source_table": "event_time_daily.csv",
+          "value": 1.0221412031358884e-05
+        },
+        {
+          "display_value": "-59.57 bps",
+          "metric": "cumulative_descriptive_mean_path",
+          "source_table": "event_time_daily.csv",
+          "value": -0.005957443844803419
+        },
+        {
+          "display_value": "13.12 bps",
+          "metric": "mean_capture_ret",
+          "source_table": "event_time_overnight.csv",
+          "value": 0.001312011352467439
+        },
+        {
+          "display_value": "-75.58 bps",
+          "metric": "mean_abn_overnight_ret",
+          "source_table": "event_time_overnight.csv",
+          "value": -0.007558261902405664
+        }
+      ],
+      "headline": "The largest absolute daily mean occurred at offset +0 (-87.14 bps); offset 0 was -87.14 bps, average pre/post-offset means were 6.82 bps / 0.10 bps, the cumulative descriptive mean path was -59.57 bps, and the separate ex-open capture mean was 13.12 bps.",
+      "recommended_next_step": "Inspect calendar-date concentration, then estimate ticker/date-clustered uncertainty and stability by period.",
+      "section_id": "event_time",
+      "status": "mixed",
+      "title": "Event-time and ex-date overnight behavior"
+    },
+    {
+      "business_interpretation": "The report identifies where additional measurement can reduce uncertainty; it does not convert descriptive differences into execution decisions.",
+      "caveats": [
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled.",
+        "Direct/current-reference SIC and model-predicted pseudo-sector are kept in separate analytical populations; the coverage bridge is not a blended sector-performance taxonomy."
+      ],
+      "evidence": [
+        {
+          "display_value": "24.28 bps (yield)",
+          "metric": "largest_ordered_spread_bps",
+          "source_table": "dimension_diagnostics.csv",
+          "value": 24.27736249367291
+        },
+        {
+          "display_value": "116,438",
+          "metric": "still_unresolved_events",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 116438
+        }
+      ],
+      "headline": "The largest ordered descriptive spread was 24.28 bps in yield, while pseudo-sector left 116,438 base events unresolved; both findings prioritize validation work rather than a trading recommendation.",
+      "recommended_next_step": "Prioritize measured costs/taxes, point-in-time sector sourcing, model version/confidence, clustered inference, and time/security-type stability checks.",
+      "section_id": "business_implications",
+      "status": "mixed",
+      "title": "Business implications and next steps"
+    },
+    {
+      "business_interpretation": "The appendix makes population identities and provenance limitations explicit so each claim can be traced without rescanning M1.",
+      "caveats": [
+        "Returns are gross and descriptive; transaction costs, taxes, and net tradeability are not modeled.",
+        "Direct SIC is current-reference metadata and is not guaranteed to be a point-in-time classification.",
+        "Pseudo-sector labels are model-derived from current company descriptions and SIC-labelled training rows; M2 does not revalidate the upstream model.",
+        "The upstream hybrid model documents held-out accuracy 0.683 and weighted F1 0.670; these are upstream results, not M2 runtime validation.",
+        "The upstream pseudo-sector output has no prediction-confidence, model-version, or training-timestamp field and is structurally limited to active CS/ADRC rows with usable descriptions.",
+        "The unadjusted descriptive intervals do not account for dependence within ticker or calendar date.",
+        "Corporate-action contamination in upstream unadjusted prices remains an upstream limitation.",
+        "Pseudo-sector coverage is structurally limited to the upstream eligible active CS/ADRC universe."
+      ],
+      "evidence": [
+        {
+          "display_value": "161,296",
+          "metric": "base_events",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 161296
+        },
+        {
+          "display_value": "0",
+          "metric": "join_row_delta",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": 0
+        },
+        {
+          "display_value": "True",
+          "metric": "event_reconciliation_passed",
+          "source_table": "pseudo_sector_coverage.csv",
+          "value": true
+        }
+      ],
+      "headline": "All three sector states reconcile to 161,296 base events with join row delta 0; interpretation remains constrained by gross returns, taxonomy provenance, dependence, and upstream data limitations.",
+      "recommended_next_step": "Complete live HDFS/YARN output review, numeric/visual reconciliation, and formal sign-off for the accepted immutable run.",
+      "section_id": "limitations",
+      "status": "limited_coverage",
+      "title": "Limitations, methodology, and reconciliation appendix"
+    }
+  ]
+}

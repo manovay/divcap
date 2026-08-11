@@ -1,0 +1,3 @@
+taxonomy,analysis_events,analysis_tickers,category_count,eligible_category_count,top_1_event_share,top_5_event_share,highest_observed_eligible_group,highest_observed_mean_bps,highest_observed_n_events,highest_observed_n_tickers,lowest_observed_eligible_group,lowest_observed_mean_bps,lowest_observed_n_events,lowest_observed_n_tickers,eligible_mean_range_bps
+direct_sic_current_reference,38123,2208,331,89,0.1560475303622485,0.3933845709938882,ASSET-BACKED SECURITIES,47.599024790744295,136,11,PIPE LINES (NO NATURAL GAS),-18.3920983438879,137,7,65.99112313463219
+model_predicted_pseudo_sector,6735,462,27,18,0.23325909428359318,0.56362286562732,SIC 73,45.62354212407689,540,72,SIC 13,-17.59718407684982,159,9,63.22072620092671
