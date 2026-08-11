@@ -293,11 +293,12 @@ def train_model(spark, input_path, output_dir, cv_folds=3):
     for value, name in sorted(coeffs, key=lambda item: abs(item[0]), reverse=True)[:10]:
         output.append(f"{name}: {value:.4f}")
 
-    out_path = os.path.join(output_dir, "model_summary.txt")
     Path(output_dir).mkdir(parents=True, exist_ok=True)
-    Path(out_path).write_text("\n".join(output), encoding="utf-8")
+    out_path = os.path.join(output_dir, "model_summary.txt")
+    summary_text = "\n".join(output)
+    Path(out_path).write_text(summary_text, encoding="utf-8")
 
-    print("\n".join(output))
+    print(summary_text)
     print(f"Saved model to {model_path}")
     print(f"Saved summary to {out_path}")
 

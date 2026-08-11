@@ -30,17 +30,19 @@ The model uses a compact feature set from the existing grain table:
 Local development:
 
 ```bash
-python predictive_model/spark_dividend_predictor.py --local --input predictive_model/sample_events.csv --output-dir predictive_model/results
+python predictive_model/spark_dividend_predictor.py --local --input m1_dividend_events/div_event_grain_2026-07_2026-08.csv --output-dir predictive_model_results --cv-folds 3
 ```
 
 Cluster / HDFS usage:
 
 ```bash
-spark-submit --master yarn --deploy-mode client \
-  --num-executors 4 --executor-memory 4g --executor-cores 2 \
-  predictive_model/spark_dividend_predictor.py \
-  --input /user/ms16965_nyu_edu/divcap/curated/div_event_grain \
-  --output-dir /user/ms16965_nyu_edu/divcap/predictive_model/results
+spark-submit --master yarn --deploy-mode client --num-executors 4 --executor-memory 4g --executor-cores 2 predictive_model/spark_dividend_predictor.py --input /user/ms16965_nyu_edu/divcap/curated/div_event_grain_csv --output-dir predictive_model_results --cv-folds 3
+```
+
+One-line HDFS command:
+
+```bash
+spark-submit --master yarn --deploy-mode client --num-executors 4 --executor-memory 4g --executor-cores 2 predictive_model/spark_dividend_predictor.py --input /user/ms16965_nyu_edu/divcap/curated/div_event_grain_csv --output-dir predictive_model_results --cv-folds 3
 ```
 
 ## Output

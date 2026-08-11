@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.OneHotEncoderModel","timestamp":1786489164239,"sparkVersion":"3.5.3","uid":"OneHotEncoder_fd2456377610","paramMap":{"outputCols":["volatility_bucket_vec"],"inputCols":["volatility_bucket_idx"],"dropLast":false},"defaultParamMap":{"outputCol":"OneHotEncoder_fd2456377610__output","dropLast":true,"handleInvalid":"error"}}

@@ -1,1 +1,0 @@
-{"class":"org.apache.spark.ml.feature.StringIndexerModel","timestamp":1786488318976,"sparkVersion":"4.1.2","uid":"StringIndexer_e69355a5345d","paramMap":{"handleInvalid":"keep","inputCol":"volatility_bucket","outputCol":"volatility_bucket_idx"},"defaultParamMap":{"handleInvalid":"error","outputCol":"StringIndexer_e69355a5345d__output","stringOrderType":"frequencyDesc"}}
