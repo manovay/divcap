@@ -18,17 +18,30 @@ class GroupSummaryContractTests(unittest.TestCase):
             (
                 "n_events",
                 "n_tickers",
+                "n_capture_ret_abn",
+                "n_capture_ret",
+                "n_drop_ratio",
+                "event_share_of_analysis",
+                "ticker_share_of_analysis",
                 "mean_capture_ret_abn",
+                "stddev_capture_ret_abn",
+                "se_capture_ret_abn",
+                "ci95_low_capture_ret_abn",
+                "ci95_high_capture_ret_abn",
                 "median_capture_ret_abn",
                 "p25_capture_ret_abn",
                 "p75_capture_ret_abn",
                 "positive_capture_ret_abn_rate",
                 "mean_capture_ret",
                 "median_capture_ret",
+                "mean_drop_ratio",
                 "median_drop_ratio",
                 "p25_drop_ratio",
                 "p75_drop_ratio",
                 "drop_ratio_lt_1_rate",
+                "low_n_flag",
+                "low_ticker_flag",
+                "report_eligible_flag",
             ),
         )
 
@@ -48,6 +61,7 @@ class GroupSummaryContractTests(unittest.TestCase):
             "grain_path": "/user/default/divcap/curated/div_event_grain",
             "panel_path": "/user/default/divcap/curated/div_event_panel",
             "metadata_path": "/user/default/divcap/reference/meta.jsonl",
+            "pseudo_sector_path": "/user/default/divcap/curated/pseudo_sector",
             "output_root": "/user/default/divcap/m2/cross_sectional",
         }
         with mock.patch.dict("os.environ", {"TEAM": "/user/team/divcap"}):
@@ -56,6 +70,10 @@ class GroupSummaryContractTests(unittest.TestCase):
         self.assertEqual(
             resolved["grain_path"],
             "/user/team/divcap/curated/div_event_grain",
+        )
+        self.assertEqual(
+            resolved["pseudo_sector_path"],
+            "/user/team/divcap/curated/pseudo_sector",
         )
 
     def test_default_config_excludes_spy_benchmark(self):

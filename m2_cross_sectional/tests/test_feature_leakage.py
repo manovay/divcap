@@ -23,6 +23,9 @@ class FeatureLeakageTests(unittest.TestCase):
             "sic_code",
             "pseudo_sector",
             "label_level",
+            "sector_state",
+            "sector_source",
+            "effective_sector",
             "div_yield_bucket",
         ]
         self.assertEqual(
@@ -31,8 +34,11 @@ class FeatureLeakageTests(unittest.TestCase):
                 "capture_ret_abn",
                 "div_yield_bucket",
                 "drop_ratio",
+                "effective_sector",
                 "label_level",
                 "pseudo_sector",
+                "sector_source",
+                "sector_state",
                 "sic_code",
                 "sic_description",
             ],
