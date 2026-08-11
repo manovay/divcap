@@ -1,0 +1,19 @@
+AUC_cv_mean=0.7821
+AUC_holdout_like=0.7824
+Accuracy=0.7013
+Precision=0.7005
+Recall=0.7013
+F1=0.6993
+Rows=160540
+Folds=3
+Top coefficients:
+div_yield: 181.8806
+drop_pct: -181.6236
+pre_avg_abn_ret: -32.3575
+pre_avg_ret: 25.2987
+post_avg_ret: -8.9299
+post_avg_abn_ret: 8.9038
+pre_vol: 3.5026
+n_bars_post: 0.2727
+n_bars_pre: -0.1790
+n_distributions: -0.0868
