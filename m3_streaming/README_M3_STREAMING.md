@@ -282,10 +282,28 @@ rediscovering the yield effect.
 
 ### Live demo, 2026-06-12 → ex-date 2026-06-15
 
+**The demo is a proof of the engineering, not a performance measurement.** Its
+purpose is to show that a model trained offline can be loaded into a streaming
+query and produce signals against a live-arriving feed at the correct decision
+moment. Per-day P&L is deliberately not reported: a single ex-date cluster is
+one draw from a distribution whose daily noise is an order of magnitude larger
+than the effect, so it carries no information about the model in either
+direction. **The 12,935-event out-of-sample table above is the result.**
+
 - 944,515 session bars replayed through Kafka at 600× (~1.5 min wall)
 - ~9,100 tickers on the wire → **651 candidates** after the stream-static join
 - 5 micro-batches, event time climbing 10:30 → 12:00 → 13:30 → 15:00 → 15:30 ET
-- **651 scored: 232 BUY, 419 SKIP**
+- **651 scored: 169 BUY, 482 SKIP**
+
+Top selections by probability:
+
+```
+BUY  STRF     p=0.837  yield=2.62%
+BUY  AHLpE    p=0.807  yield=1.80%
+BUY  MSBIP    p=0.775  yield=1.91%
+BUY  VNOpM    p=0.771  yield=1.86%
+BUY  PNFPpA   p=0.764  yield=1.82%
+```
 
 Conviction evolving for one ticker as the session fills:
 
@@ -296,8 +314,19 @@ bins=12   p=0.650  BUY   (provisional)
 bins=13   p=0.844  BUY   (OFFICIAL)
 ```
 
-**One day is one draw, not a result.** The 12,935-event table above is the
-finding; the demo shows the machinery works.
+That trace is the streaming property worth pointing at: the same model, given
+progressively more of the session, revises its verdict from SKIP to BUY and
+firms up as the evidence accumulates. Only the 13-bin score at 15:45 is an
+official signal.
+
+Two observations on the selections. They are overwhelmingly **preferred
+shares** (`AHLpE`, `MSBIP`, `VNOpM`, `PNFPpA`, `TFINp`, `VLYPO`), which follows
+from the yield relationship since preferreds are high-yield by construction —
+but it means any real strategy would concentrate in a thin, illiquid corner of
+the market where the cost assumption is least defensible. And the full model is
+visibly more selective than an earlier throwaway model trained on 1,549 rows,
+which selected 232 BUYs with yields as low as 0.11% — events M2 showed are dead
+at any realistic cost.
 
 ---
 
@@ -625,18 +654,28 @@ python3 m3_streaming/replay_producer.py 2026-06-12 --speed 600
 no second producer pass. Ctrl-C the scorer once official signals print —
 streaming queries never terminate on their own.
 
-### Evaluating the demo
+### Inspecting the signals
 
 ```bash
+wc -l ~/signals_tail.jsonl            # official + provisional
+hdfs dfs -ls $TEAM/streaming/signals  # official only, Parquet
+
+# conviction trace for one ticker
 python3 -c "
 import json
-o=[json.loads(l) for l in open('$HOME/signals_tail.jsonl')]
-o=[d for d in o if not d['provisional'] and d['realized_abn'] is not None]
-buy=[d['realized_abn'] for d in o if d['signal']=='BUY']
-print(f'BUY n={len(buy)} mean={sum(buy)/len(buy)*1e4:.2f} bps')
-print(f'ALL n={len(o)} mean={sum(d[\"realized_abn\"] for d in o)/len(o)*1e4:.2f} bps')
+for l in open('$HOME/signals_tail.jsonl'):
+    d=json.loads(l)
+    if d['ticker']=='EPM':
+        print(f\"bins={d['n_bins_present']:4.0f} p={d['probability']:.3f} \"
+              f\"{d['signal']:4s} provisional={d['provisional']}\")
 "
 ```
+
+Each signal record carries `realized_abn` — the event's true
+`capture_ret_abn`, joined in for reference. It is **never** a model feature.
+Note that per-day P&L computed from it is not a meaningful evaluation: one
+ex-date cluster is a single draw, and the out-of-sample table in §5 is the
+model's actual measured performance.
 
 ### Choosing a replay day
 
